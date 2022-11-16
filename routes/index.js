@@ -9,8 +9,7 @@ yourSbController = require('../controllers/yoursnowball');
 const router = express.Router()
 
 
-// 로그인 / 회원가입 API
-router.get('/user', userController.getUser); 
+// 로그인 / 회원가입 API 
 router.post('/user', userController.postUser);
 router.post('/login', userController.login);
 router.get('/login', userController.getUser);
