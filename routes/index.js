@@ -12,6 +12,7 @@ const router = express.Router()
 // 로그인 / 회원가입 API 
 router.post('/user', userController.postUser);
 router.post('/login', userController.login);
+// router.get('/login', userController.getUser);
 
 // 내 스노우볼 관련 API
 // router.get('/mysnowball', mySbController.getSnowball);
@@ -24,7 +25,7 @@ router.post('/login', userController.login);
 
 
 // 남의 스노우볼 관련 API
-
+router.post('/:ownerId/new', yourSbController.postMessage);
 
 
 module.exports = router

@@ -1,9 +1,18 @@
 {
   "dependencies": {
     "@prisma/client": "^4.6.1",
-    "express": "^4.18.2"
+    "aws-sdk": "^2.1256.0",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.20",
     "prisma": "^4.6.1"
+  },
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "dev": "nodemon ./server.js",
+    "test": "echo no test",
+    "submit": "echo you don\\'t need to submit"
   }
 }
