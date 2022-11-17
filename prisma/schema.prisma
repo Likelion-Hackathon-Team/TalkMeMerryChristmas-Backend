@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Message {
+  messageId     Int     @id @default(autoincrement())
+  objetId       Int
+  receiverId    Int
+  writer        String? @db.VarChar(31)
+  comment       String? @db.VarChar(255)
+  commonVoice   String  @db.VarChar(255)
+  personalVoice String  @db.VarChar(255)
+  Objet         Objet   @relation(fields: [objetId], references: [objetId], onDelete: NoAction, onUpdate: NoAction, map: "message_objet_objetid_fk")
+  User          User    @relation(fields: [receiverId], references: [ownerId], onDelete: NoAction, onUpdate: NoAction, map: "message_user_ownerid_fk")
+}
+
+model Objet {
+  objetId Int       @id @default(autoincrement())
+  imgUrl  String    @db.VarChar(255)
+  top     Int?
+  height  Int?
+  Message Message[]
+}
+
+model User {
+  ownerId     Int       @id @default(autoincrement())
+  name        String    @db.VarChar(31)
+  userId      String    @unique @db.VarChar(31)
+  password    String    @db.VarChar(31)
+  allVoiceUrl String?   @db.VarChar(255)
+  cnt         Int
+  Message     Message[]
+}
