@@ -2,6 +2,16 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 const aws = require('aws-sdk');
 
+// GET 
+const getAllObjets = async (req, res) => {
+    const {ownerId} = req.params.ownerId;
+
+    const foundObjet = await prisma.objet.findMany();
+
+    res.send(foundObjet);
+
+}
+
 // POST 
 const postMessage = async (req, res) => {
     // try { 
@@ -43,5 +53,6 @@ const postMessage = async (req, res) => {
 
 //export controller functions
 module.exports = {
+    getAllObjets,
     postMessage
 };
