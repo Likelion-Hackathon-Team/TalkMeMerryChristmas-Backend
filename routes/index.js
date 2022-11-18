@@ -1,5 +1,5 @@
 const express = require('express')
-
+const upload = require('../modules/multer')
 // 컨트롤러 가져오기
 const userController= require('../controllers/user');
 const mySbController = require('../controllers/mysnowball');
@@ -25,7 +25,7 @@ router.post('/login', userController.login);
 
 
 // 남의 스노우볼 관련 API
-router.post('/:ownerId/new', yourSbController.postMessage);
+router.post('/:ownerId/new', upload.fields([{name: "commonVoice",maxCount: 1},{name: "personalVoice",maxCount: 1}]), yourSbController.postMessage);
 
 
 module.exports = router

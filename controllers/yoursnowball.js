@@ -1,36 +1,38 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
-
+const aws = require('aws-sdk');
 
 // POST 
 const postMessage = async (req, res) => {
     // try { 
-        const { writer, comment, objetId, top, left, commonVoice, personalVoice } = req.body;
+        const { writer, comment, objetId, top, left } = req.body;
         const receiverId = parseInt(req.params.ownerId); 
-        const newMsgObjet = await prisma.MsgObjet.create({
-            data : {
-                objetId,
-                top,
-                left
-            }
-        })
+        
+        console.log(req.files)
+
+        //S3에 업로드된 파일 주소 저장하기
+        const commonVoice = req.files['commonVoice'][0].location;
+        const personalVoice = req.files['personalVoice'][0].location;
+        
 
         const newMessage = await prisma.Message.create({
             data:{
                 receiverId: receiverId,
                 writer,
                 comment,
-                commonVoice,
-                personalVoice,
-                msgObjetId: newMsgObjet.msgObjetId
+                commonVoice:commonVoice,
+                personalVoice:personalVoice,
+                objetId: parseInt(objetId),
+                top: parseInt(top),
+                left: parseInt(left)
             }
         })
-
+        
+        
         
         return res.status(200).send([{
-            "MsgObjetId": newMsgObjet.msgObjet,
-            "MsgObjet ObjetId": newMsgObjet.objetId,
-            "newMesssageWriter" : newMessage.writer
+            "newMesssageWriter" : newMessage.writer,
+            "newMessageComment" : newMessage.comment
         }]);
     // } catch(err) {
     //     res.status(err.statusCode).json({ "message" : err.message });
