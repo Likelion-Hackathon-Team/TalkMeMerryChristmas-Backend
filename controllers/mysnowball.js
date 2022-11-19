@@ -29,7 +29,7 @@ const getSnowball = async (req, res) => {
 
     
 
-    return res.status(200).send({
+    return res.status(200).json({
         "name" : receiver.name,
         "messages" : objets
     });
@@ -69,9 +69,6 @@ const getAllMsg = async (req,res) => {
         "messages" : messages
     });
 }
-
-
-
 
 
 module.exports = {
