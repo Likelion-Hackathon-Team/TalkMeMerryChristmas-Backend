@@ -3,18 +3,34 @@ const prisma = new PrismaClient()
 
 
 // // GET '/api/mysnowball/:ownerId/voices'
-const getVoices = async (req, res) => {
+const getVoices = async (req,res) => {
     const ownerId = parseInt(req.params.ownerId); 
-    const user = await prisma.User.findUnique({
-        where: {
+
+    const receiver = await prisma.User.findUnique({
+        where:{
             ownerId : ownerId
+        },
+        select : {
+            name: true
+        },
+    });
+    // console.log(receiver.name);
+
+    const messages = await prisma.Message.findMany({
+        where : {
+            receiverId : ownerId,
+        },
+        select:{
+            messageId : true,
+            writer: true,
+            comment: true,
+            commonVoice: true
         }
     })
 
-    return res.status(200).json({
-        "name" : user.name,
-        "cnt" : user.cnt,
-        "allVoiceUrl": user.allVoiceUrl
+    return res.status(200).send({
+        "name" : receiver.name,
+        "messages" : messages
     });
 }
 
@@ -29,11 +45,20 @@ const getOneMsg = async (req,res) => {
     })
     
     const messageId = parseInt(req.query.messageId);
-    const message = await prisma.Message.findUnique({
+    
+    const message = await prisma.Message.findFirst({
         where: {
+            receiverId : ownerId,
             messageId : messageId
         }
     })
+
+    if (message==null){
+        return res.status(200).json({
+            "success" : false,
+            "message" : "No such data"
+        });
+    }
 
     const userMessage = {
         "writer" : message.writer,
