@@ -3,7 +3,6 @@ const bodyParser = require('body-parser')
 const app = express()
 const routes = require('./routes')
 const cors = require('cors')
-
 app.use(cors({
   origin: '*', // 모든 출처 허용 옵션. true 를 써도 된다.
 }));

@@ -121,3 +121,4 @@ dist
 package-lock.json
 .DS_Store
 config/secret.js
+config/s3.json
