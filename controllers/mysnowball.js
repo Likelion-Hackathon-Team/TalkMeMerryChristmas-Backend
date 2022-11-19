@@ -60,7 +60,8 @@ const getAllMsg = async (req,res) => {
             messageId : true,
             writer: true,
             comment: true,
-            personalVoice: true
+            personalVoice: true,
+            Objet: true
         }
     })
 
