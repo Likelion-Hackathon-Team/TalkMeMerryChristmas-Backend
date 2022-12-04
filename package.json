@@ -12,8 +12,8 @@
     "prisma": "^4.7.1"
   },
   "scripts": {
-    "start": "nodemon ./server.js",
-    "dev": "nodemon ./server.js",
+    "start": "npm run dev",
+    "dev": "npm run dev",
     "test": "echo no test",
     "submit": "echo you don\\'t need to submit"
   }
