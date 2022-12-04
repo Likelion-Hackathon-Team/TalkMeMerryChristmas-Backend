@@ -120,5 +120,4 @@ dist
 #보안관련해서..
 package-lock.json
 .DS_Store
-config/secret.js
-config/s3.json
+/config
